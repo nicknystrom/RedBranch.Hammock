@@ -1,0 +1,33 @@
+#summary Entities can indicate that they are interested in Id and Revision information by inheriting from Document or implementing IHasDocument.
+
+= Introduction =
+
+One feature of Hammock is that it does not require that entities inherit from a base class or implement any interface. However, a side effect of this feature is that by default an entity does not contain its CouchDB Id or Revision information. This is generally considered a feature as well, since database id's and revision numbers are persistence details, and don't normally need to be exposed in the application's domain objects.
+
+However, in cases where it is desirable that a domain object has id and revision information closely associated to it, the object may either inherit from the Document class or implement IHasDocument. Both approaches have exactly the same functionality, so choosing between them is simply a matter of which works best in your object model. 
+
+= IHasDocument =
+
+The IHasDocument interface defines only a single property, a Document:
+
+{{{
+public interface IHasDocument
+{
+  [JsonIgnore] Document Document { get; set; }
+}
+}}}
+
+When you implement IHasDocument in one of your entities, Hammock will fill the document property with the Id and Revision information of the entity at the time it was loading:
+
+{{{
+public class MyEntity : IHasDocument
+{
+  [JsonIgnore] public Document Document { get; set; }  
+  
+  public string MyDomainProperty { get; set; }
+  ...
+}
+
+var x = session.Load<MyEntity>("an-entity-with-this-id");
+Assert.That(x.Document.Id, Is.EqualTo("an-entity-with-this-id");
+}}}
