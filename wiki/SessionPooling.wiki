@@ -6,25 +6,17 @@ The Repository and Query capabilities of Hammock require it to load (and update)
 
 = Enabling Session Pooling =
 
-Session pooling works automatically whenever you create a Session from a Connection:
+Session pooling works automatically whenever you create a Session from a Connection. Simply use the Session normally, and when the Session is garbage collected by the runtime (or manually disposed) it will be returned to the Connection for reuse.
 
 {{{
 var c = new Connection(new Uri("http://localhost:5984"));
-var s = c.CreateSession();
-}}}
-
-You may then use the Session normally:
-
-{{{
-var u = s.Load<User>("user-foo");
-u.SetPassword("bar");
-s.Save(u);
-}}}
-
-When the Session is garbage collected by the runtime, manually disposed, or released using the Release() method, it will be returned to the Connection for reuse.
-
-{{{
-s.Release();
+using (var s = c.CreateSession())
+{
+    // session will be recycled when the using {} block exits.
+    var u = s.Load<User>("user-foo");
+    u.SetPassword("bar");
+    s.Save(u);
+}
 }}}
 
 If you then request a new Session, you will actually receive a reference to the previously used Session.
@@ -67,4 +59,3 @@ using (var s = c.CreateSession())
 }
 
 }}}
-
