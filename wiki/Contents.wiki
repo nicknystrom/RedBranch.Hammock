@@ -1,4 +1,5 @@
 #summary Organized wiki page listings.
+#labels Featured
 
   * [http://code.google.com/p/relax-net/w/list All Pages]
   * Features
