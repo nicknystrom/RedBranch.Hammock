@@ -2,7 +2,7 @@
 
 = Introduction =
 
-The Repository and Query capabilities of Hammock require it to load (and update) your database's various design documents. The first time you use a Repository<Foo> on any given Session, that Session needs to load the design document for Foo. In order to prevent this from occurring on each and every page request, Hammock provides the familiar connection pooling system to recycle your Session instances.
+The Repository and Query capabilities of Hammock require it to load (and update) your database's various design documents. The first time you use a {{{ Repository<Foo> }}} on any given Session, that Session needs to load the design document for Foo. In order to prevent this from occurring on each and every page request, Hammock provides the familiar connection pooling system to recycle your Session instances.
 
 = Enabling Session Pooling =
 
