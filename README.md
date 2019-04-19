@@ -1,4 +1,8 @@
-Hammock:
+*This repository is archived, however an active fork is being maintained at https://github.com/DamianMac/Hammock.*
+
+---
+
+Hammock
 
 A domain focused library for .NET
 http://code.google.com/p/relax-net
